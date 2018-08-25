@@ -18,9 +18,13 @@ def create_app(config_name):
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
-    print('app')
+    
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    from .todo import todo as todo_blueprint
+    app.register_blueprint(todo_blueprint)
+
 
     return app
 

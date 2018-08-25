@@ -7,7 +7,7 @@ print ('Adding Route')
 @main.route('/')
 def index():
     #return '<h1>Hello World</h1>'
-    return render_template('index.html')
+    return render_template('index.html', app_name="index")
 
 
 
