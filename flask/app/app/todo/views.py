@@ -29,7 +29,7 @@ def index():
 
 @todo.route('/api/v1.0/tasks', methods=["GET"])
 def get_tasks(): 
-    return jsonify({"tasks": tasks})
+    return jsonify({"tasks": [make_public_task(task) for task in tasks]})
 
 @todo.route('/api/v1.0/tasks/<int:taskid>', methods=["GET"])
 def get_task(taskid): 
@@ -92,3 +92,12 @@ def not_found(error):
 def filter_task(taskid):
     task = [task for task in tasks if task["id"]==taskid]
     return task
+
+def make_public_task(task):
+    new_task = {}
+    for field in task:
+        if field == 'id':
+            new_task['uri'] = url_for('todo.get_task', taskid=task['id'], _external=True)
+        else:
+            new_task[field] = task[field]
+    return new_task
