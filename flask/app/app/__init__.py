@@ -7,8 +7,7 @@ from config import config
 
 bootstrap = Bootstrap()
 moment = Moment()
-mail = Mail()
-db = SQLAlchemy()
+mail = Mail() 
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -17,13 +16,13 @@ def create_app(config_name):
     bootstrap.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
-    db.init_app(app)
+    #db.init_app(app)
     
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     from .todo import todo as todo_blueprint
-    app.register_blueprint(todo_blueprint)
+    app.register_blueprint(todo_blueprint, url_prefix="/todo/")
 
 
     return app

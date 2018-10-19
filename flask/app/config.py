@@ -13,7 +13,7 @@ class Config:
     MAIL_SUBJECT = '[FLASK]'
     MAIL_SENDER = 'No Reply <flask@exmaple.com>'
     FLASK_ADMIN = os.environ.get("FLASK_ADMIN")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+ 
 
 
     @staticmethod
@@ -22,16 +22,14 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DEV_DATABASE_URL") or "sqlite:///" + os.path.join(basedir, 'data-dev.sqllite')
+
 
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL") or "sqlite://"
-    print(SQLALCHEMY_DATABASE_URI)
-
+ 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL") or "sqlite:///" + os.path.join(basedir, 'data.sqllite')
+    PRODUCTION=True
 
 
 config = {
