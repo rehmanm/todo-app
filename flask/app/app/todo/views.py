@@ -56,7 +56,8 @@ def create_task():
         'done': False
     }
     tasks.append(task)
-    return jsonify({"task": task}), 201
+    models.create_task(task)
+    return jsonify({"task": make_public_task(task)}), 201
 
 @todo.route('/api/v1.0/tasks/<int:taskid>', methods=["PUT"])
 def update_task(taskid): 
