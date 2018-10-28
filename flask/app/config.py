@@ -22,14 +22,18 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    DOCUMENT = "todo_dev"
 
 
 class TestConfig(Config):
     TESTING = True
- 
+    DOCUMENT = "todo_test"
+
 
 class ProductionConfig(Config):
-    PRODUCTION=True
+    PRODUCTION=True    
+    DOCUMENT = "todo"
+
 
 
 config = {

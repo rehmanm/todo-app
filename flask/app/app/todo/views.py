@@ -1,8 +1,9 @@
 from datetime import datetime
 from flask import render_template, session, redirect, url_for, jsonify, abort, make_response, request
 from . import todo
+from .. import models
 
-
+'''
 
 tasks = [
     {
@@ -19,6 +20,9 @@ tasks = [
     }
 ]
 
+'''
+tasks = models.get_all_tasks()
+
 
 @todo.route('/')
 def index():
@@ -29,11 +33,13 @@ def index():
 
 @todo.route('/api/v1.0/tasks', methods=["GET"])
 def get_tasks(): 
+    tasks = models.get_all_tasks()
     return jsonify({"tasks": [make_public_task(task) for task in tasks]})
+    #return jsonify({"tasks": tasks})
 
 @todo.route('/api/v1.0/tasks/<int:taskid>', methods=["GET"])
 def get_task(taskid): 
-    task = filter_task(taskid)
+    task = models.filter_task(taskid)
     if len(task) == 0:
         abort(404)
     return jsonify({"tasks": task[0]})
@@ -95,9 +101,12 @@ def filter_task(taskid):
 
 def make_public_task(task):
     new_task = {}
+    print(task)
     for field in task:
         if field == 'id':
-            new_task['uri'] = url_for('todo.get_task', taskid=task['id'], _external=True)
+            new_task['uri'] = url_for('todo.get_task', taskid=int(task['id']), _external=True)
+        elif field == '_id':
+            print("ig")
         else:
             new_task[field] = task[field]
     return new_task
